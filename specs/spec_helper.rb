@@ -1,9 +1,11 @@
 require 'rubygems'
 require 'spec'
 require 'couchrest'
+require 'yaml'
 
-COUCHHOST = "localhost"
-COUCHPORT = "5984"
+config = YAML.load_file('config.yml')
+COUCHHOST = config['couchdb']['host']
+COUCHPORT = config['couchdb']['port']
 TESTDB = 'scosugbot-test'
 TEST_SERVER = CouchRest.new
 TEST_SERVER.default_database = TESTDB
