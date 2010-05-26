@@ -34,6 +34,7 @@ dependencies:
 * CouchREST
 * JSON (the gem)
 * Rake
+* RSpec (for tests)
 * Fortune (install from package manager)
 
 You can install CouchDB using your system's package manager or by
@@ -42,7 +43,10 @@ wiki](http://wiki.apache.org/couchdb/Installation). As for the rest,
 you can install the required gems with this command (assumes you have
 rubygems):
 
-`gem install cinch couchrest json rake`
+`gem install cinch couchrest json rake rspec`
 
 # Language
 Right now, scosug has some foul language in its vocabulary. Enjoy.
+
+# ToDos
+* Actually implement stable CouchDB support
