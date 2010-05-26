@@ -1,14 +1,17 @@
-require 'rubygems'
-require 'spec'
 require 'libscosugbot'
+require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
 describe LibScosugBot::Storage::CouchStore do
 
   before(:each) do 
-    @host = "localhost"
-    @port = "5984"
-    @dbname = "rspec-test"
+    @host = COUCHHOST
+    @port = COUCHPORT
+    @dbname = TESTDB
     @cs = LibScosugBot::Storage::CouchStore.new(@host, @port, @dbname)
+  end
+
+  after(:each) do
+    @cs.db.delete! #rescue nil
   end
 
   describe "should assign config variables properly with readers" do
