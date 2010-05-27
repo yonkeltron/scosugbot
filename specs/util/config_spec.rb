@@ -1,5 +1,5 @@
 require 'libscosugbot'
-require File.join(File.dirname(__FILE__), '..', 'spec_helper')
+require 'specs/spec_helper'
 
 describe LibScosugBot::Config do
 
