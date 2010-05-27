@@ -4,15 +4,16 @@ require 'couchrest'
 require 'yaml'
 
 config = YAML.load_file('config.yml')
-COUCHHOST = config['couchdb']['host']
-COUCHPORT = config['couchdb']['port']
-TESTDB = 'scosugbot-test'
-TEST_SERVER = CouchRest.new
-TEST_SERVER.default_database = TESTDB
-DB = TEST_SERVER.database(TESTDB)
-
-Spec::Runner.configure do |config|
-#  config.after(:all) do
-#    TEST_SERVER.database(TESTDB).delete! #rescue nil
-#  end
+unless defined?(COUCHHOST)
+  COUCHHOST = config['couchdb']['host']
+end
+unless defined?(COUCHPORT)
+  COUCHPORT = config['couchdb']['port']
+end
+unless defined?(TESTDB)
+  TESTDB = 'scosugbot-test'
+end
+unless defined?(TEST_SERVER)
+  TEST_SERVER = CouchRest.new
+  TEST_SERVER.default_database = TESTDB
 end
