@@ -62,11 +62,19 @@ describe LibScosugBot::Storage::MongoDB::MongoStore do
       @db.memorize('panda', 'CURRY')
       @db.fetch('panda').should eql('CURRY')
     end
+
+    it "and #fetch_raw should return whole objects" do
+      @db.memorize('panda', 'bamboo')
+      @db.fetch_raw('panda').should be_instance_of(LibScosugBot::Storage::MongoDB::Definition)
+      @db.fetch_raw('panda').contents.should eql('bamboo')
+    end
   end
 
   describe "should log properly" do
     it "and log without error" do
-      pending
+      @test_log_vals.each_pair do |k,v|
+        @db.log(k, v[0], v[1]).should be_true
+      end
     end
   end
 end

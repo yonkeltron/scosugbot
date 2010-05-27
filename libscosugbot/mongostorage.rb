@@ -47,7 +47,7 @@ module LibScosugBot
         end
 
         def store(key,val)
-          result = Definition.first(:conditions => {:term => key})
+          result = fetch_raw(key)
           if result
             result.contents = val
           else
@@ -57,14 +57,23 @@ module LibScosugBot
         end
 
         def fetch(key)
-          result = Definition.first(:conditions => {:term => key})
+          result = fetch_raw(key)
           if result
               result = result.contents
           end
           result
         end
 
-        def log(message, priority, service = 'system')
+        def fetch_raw(key)
+          Definition.first(:conditions => {:term => key})
+        end
+
+        def log(priority, message, service = 'system')
+          begin
+            LogEntry.create!(:message => message, :priority => priority, :service => 'system')
+          rescue Exception => e
+            puts "Error saving log entry! Time: #{Time.now} -> #{e}"
+          end
         end
 
       end
