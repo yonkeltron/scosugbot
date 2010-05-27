@@ -1,11 +1,16 @@
 #!/usr/bin/env ruby
 
+puts "Engaging warp drive at #{Time.now.utc}"
+
 require 'rubygems'
 require 'cinch'
 require 'libscosugbot'
 
-db = LibScosugBot::Storage::PStoreStore.new('scosugbot.pstore')
+print "Initializing database connection..."
+db = LibScosugBot::Storage::MongoDB::MongoStore.new('scosugbot')
+puts "Done. Connected -> #{db}"
 
+print "Defining plugins..."
 bot = Cinch.setup do
   server "irc.freenode.org"
   nick "scosugbot"
@@ -21,11 +26,11 @@ bot.plugin "say :text" do |m|
 end
 
 bot.plugin "memorize :thing is :def" do |m|
-  m.reply db.memorize(m.args[:thing], m.args[:def])
+  m.reply db.memorize(m.args[:thing].downcase, m.args[:def])
 end
 
 bot.plugin "recall :thing" do |m|
-  m.reply db.recall(m.args[:thing])
+  m.reply db.recall(m.args[:thing].downcase)
 end
 
 bot.plugin("tell :who-word about :what") do |m|
@@ -73,4 +78,7 @@ bot.plugin("pull my finger", :prefix => :bot) do |m|
   m.reply "#{m.nick}: get away from me. you. sick. fuck."
 end
 
+puts "Done."
+
+puts "Starting up!"
 bot.run

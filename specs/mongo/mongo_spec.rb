@@ -31,21 +31,30 @@ describe LibScosugBot::Storage::MongoDB::MongoStore do
   end
 
   describe "should handle storage effectively" do
-    it "and should memorize successfully" do
+    it "and should store successfully" do
       @test_vals.each_pair do |k,v|
-        @db.memorize(@k, @v).should be_true
+        @db.store(@k, @v).should be_true
       end
     end
 
     it "and should recall successfully" do
       @test_vals.each_pair do |k,v|
-        @db.memorize(k,v)
-        @db.recall(k).should eql(v)
+        @db.store(k,v)
+        @db.fetch(k).should eql(v)
       end
     end
 
     it "and should return nil when a record is not found" do
-      @db.recall('FROG').should be_nil
+      @db.fetch('FROG').should be_nil
+    end
+
+    it "and should respond properly to memorize" do
+      @db.memorize('panda', 'bamboo').should eql("Got it.")
+    end
+
+    it "and should respond properly to recall" do
+      @db.memorize('panda', 'bamboo')
+      @db.recall('panda').should match(/panda is bamboo/)
     end
   end
 

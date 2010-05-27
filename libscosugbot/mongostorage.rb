@@ -19,10 +19,38 @@ module LibScosugBot
         end
 
         def memorize(key,val)
-          Definition.create!(:term => key, :contents => val)
+          begin
+            success = store(key, val)
+            if success
+              result = "Got it."
+            else
+              result = "FAIL while storing #{key}!"
+            end
+          rescue Exceptopn => e
+            result = "Problem storing #{key}: #{e}"
+          end
+          result
         end
 
         def recall(key)
+          begin
+            success = fetch(key)
+            if success
+              result = "I recall that #{key} is #{success}"
+            else
+              result = "I don't know what #{key} is"
+            end
+          rescue Exception => e
+            result = "Error retrieving #{key}: #{e}"
+          end
+          result
+        end
+
+        def store(key,val)
+          Definition.create!(:term => key, :contents => val)
+        end
+
+        def fetch(key)
           result = Definition.first(:conditions => {:term => key})
           if result
               result = result.contents
