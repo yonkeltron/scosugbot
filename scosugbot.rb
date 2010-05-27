@@ -78,6 +78,10 @@ bot.plugin("pull my finger", :prefix => :bot) do |m|
   m.reply "#{m.nick}: get away from me. you. sick. fuck."
 end
 
+bot.plugin "lastlog" do |m|
+  m.reply db.last_log_message
+end
+
 puts "Done."
 
 puts "Starting up!"

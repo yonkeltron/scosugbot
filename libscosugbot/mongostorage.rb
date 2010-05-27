@@ -12,10 +12,10 @@ module LibScosugBot
 
         def initialize(dbname, host = 'localhost', port = '27017')
           @db = Mongo::Connection.new(host, port).db(dbname)
-#          LibScosugBot::Config.mongo(@db)
           Mongoid.configure do |config|
             config.master = @db
           end
+          log(0, 'Starting Up at #{Time.now}')
         end
 
         def memorize(key,val)
@@ -27,6 +27,7 @@ module LibScosugBot
               result = "FAIL while storing #{key}!"
             end
           rescue Exceptopn => e
+            log(4, "#{result} -> #{e}", 'memory')
             result = "Problem storing #{key}: #{e}"
           end
           result
@@ -42,6 +43,7 @@ module LibScosugBot
             end
           rescue Exception => e
             result = "Error retrieving #{key}: #{e}"
+            log(4, result, 'memory')
           end
           result
         end
@@ -50,6 +52,7 @@ module LibScosugBot
           result = fetch_raw(key)
           if result
             result.contents = val
+            log(0, "Updating definition of #{key} with #{val}", 'memory')
           else
             result = Definition.new(:term => key, :contents => val)
           end
@@ -70,12 +73,15 @@ module LibScosugBot
 
         def log(priority, message, service = 'system')
           begin
-            LogEntry.create!(:message => message, :priority => priority, :service => 'system')
+            LogEntry.create!(:message => message, :priority => priority, :service => service)
           rescue Exception => e
             puts "Error saving log entry! Time: #{Time.now} -> #{e}"
           end
         end
 
+        def last_log_message
+          LogEntry.last
+        end
       end
 
       class Definition
@@ -95,6 +101,10 @@ module LibScosugBot
         field :message, :type => String
         field :priority, :type => Integer
         field :service, :type => String
+
+        def to_s
+          "Message: #{self.message} | Priority: #{self.priority} | Service: #{self.service} <- Logged at #{self.created_at}"
+        end
       end
     end
   end
