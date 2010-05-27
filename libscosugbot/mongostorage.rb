@@ -47,7 +47,13 @@ module LibScosugBot
         end
 
         def store(key,val)
-          Definition.create!(:term => key, :contents => val)
+          result = Definition.first(:conditions => {:term => key})
+          if result
+            result.contents = val
+          else
+            result = Definition.new(:term => key, :contents => val)
+          end
+          result.save
         end
 
         def fetch(key)

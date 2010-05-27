@@ -56,6 +56,12 @@ describe LibScosugBot::Storage::MongoDB::MongoStore do
       @db.memorize('panda', 'bamboo')
       @db.recall('panda').should match(/panda is bamboo/)
     end
+
+    it "and should deal with replacements properly" do
+      @db.memorize('panda', 'bamboo')
+      @db.memorize('panda', 'CURRY')
+      @db.fetch('panda').should eql('CURRY')
+    end
   end
 
   describe "should log properly" do
