@@ -12,6 +12,7 @@ module LibScosugBot
 
         def initialize(dbname, host = 'localhost', port = '27017')
           @db = Mongo::Connection.new(host, port).db(dbname)
+#          LibScosugBot::Config.mongo(@db)
           Mongoid.configure do |config|
             config.master = @db
           end
@@ -22,7 +23,11 @@ module LibScosugBot
         end
 
         def recall(key)
-          Definition.first(:conditions => {:term => key})
+          result = Definition.first(:conditions => {:term => key})
+          if result
+              result = result.contents
+          end
+          result
         end
 
         def log(message, priority, service = 'system')
@@ -37,7 +42,16 @@ module LibScosugBot
         field :term, :type => String
         field :contents, :type => String
 
-        index :term, :background => true
+        #index :term, :background => true
+      end
+
+      class LogEntry
+        include Mongoid::Document
+        include Mongoid::Timestamps
+        
+        field :message, :type => String
+        field :priority, :type => Integer
+        field :service, :type => String
       end
     end
   end

@@ -1,19 +1,14 @@
 require 'rubygems'
 require 'spec'
-require 'couchrest'
 require 'yaml'
+require 'mongoid'
 
-config = YAML.load_file('config.yml')
-unless defined?(COUCHHOST)
-  COUCHHOST = config['couchdb']['host']
-end
-unless defined?(COUCHPORT)
-  COUCHPORT = config['couchdb']['port']
-end
-unless defined?(TESTDB)
-  TESTDB = 'scosugbot-test'
-end
-unless defined?(TEST_SERVER)
-  TEST_SERVER = CouchRest.new
-  TEST_SERVER.default_database = TESTDB
+DBNAME = 'scosugbot-test'
+DBPORT = 27017
+DBHOST = 'localhost'
+
+Spec::Runner.configure do |config|
+  config.after(:all) do
+    Mongo::Connection.new(DBHOST, DBPORT).drop_database(DBNAME)
+  end
 end

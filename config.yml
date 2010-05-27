@@ -2,7 +2,7 @@
 nick: 'scosugbot'
 channels: '#scosug'
 server: 'irc.freenode.org'
-couchdb:
+mongodb:
      host: 'localhost'
-     port: 5984
+     port: 27017
      db: 'scosugbot'
