@@ -59,6 +59,7 @@ bot.plugin("robe", :prefix => false) do |m|
 end
 
 bot.plugin("ping", :prefix => :bot) do |m|
+  db.log(0, "ping from #{m.nick}", 'ping')
   m.reply "#{m.nick}: pong -> [#{Time.now.utc}]"
 end
 
