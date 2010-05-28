@@ -15,7 +15,7 @@ module LibScosugBot
           Mongoid.configure do |config|
             config.master = @db
           end
-          log(0, 'Starting Up at #{Time.now}')
+          log(0, "Starting Up at #{Time.now}")
         end
 
         def memorize(key,val)
