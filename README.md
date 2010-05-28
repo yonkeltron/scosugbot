@@ -30,8 +30,8 @@ In order to function, scosugbot has a few required
 dependencies:
 
 * Cinch framework
-* MongoDB
-* Mongoid
+* MongoDB (the database)
+* [Mongoid](http://mongoid.org/) (the gem)
 * JSON (the gem)
 * Rake
 * RSpec (for tests)
