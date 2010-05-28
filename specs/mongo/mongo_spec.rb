@@ -69,25 +69,4 @@ describe LibScosugBot::Storage::MongoDB::MongoStore do
       @db.fetch_raw('panda').contents.should eql('bamboo')
     end
   end
-
-  describe "should log properly" do
-    it "and log without error" do
-      @test_log_vals.each_pair do |k,v|
-        @db.log(k, v[0], v[1]).should be_true
-      end
-    end
-
-    it "and get last LogEntry object for #last_log_message" do
-      @db.log(1, 'panda', 'bamboo')
-      @db.last_log_message.should be_instance_of(LibScosugBot::Storage::MongoDB::LogEntry)
-      @db.last_log_message.priority.should eql(1)
-      @db.last_log_message.message.should eql('panda')
-      @db.last_log_message.service.should eql('bamboo')
-    end
-
-    it "and produce pretty output" do
-      @db.log(1, 'panda', 'bamboo')
-      @db.last_log_message.to_s.should match(/Message: panda/)
-    end
-  end
 end
