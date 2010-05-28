@@ -2,7 +2,6 @@
 
 require 'rubygems'
 require 'mongoid'
-require 'mongo'
 
 module LibScosugBot
   module Storage
@@ -97,7 +96,7 @@ module LibScosugBot
       class LogEntry
         include Mongoid::Document
         include Mongoid::Timestamps
-        
+
         field :message, :type => String
         field :priority, :type => Integer
         field :service, :type => String

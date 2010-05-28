@@ -48,7 +48,7 @@ bot.plugin "yfi :whatever" do |m|
   m.reply "yfi#{abbrevs.join}!"
 end
 
-bot.add_custom_pattern(:swear, "fuck|shit")
+bot.add_custom_pattern(:swear, /fuck|shit/)
 
 bot.plugin(":curse-swear", :prefix => false) do |m|
   m.reply "#{m.nick}: watch your fucking mouth for saying #{m.args[:curse]}..."
