@@ -35,7 +35,7 @@ module LibScosugBot
         begin
           success = fetch(key)
           if success
-            result = "I recall that #{key} is #{success}"
+            result = "#{key} is #{success}"
           else
             result = "I don't know what #{key} is"
           end
