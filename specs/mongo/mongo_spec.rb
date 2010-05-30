@@ -1,14 +1,14 @@
 require 'libscosugbot'
 require 'specs/spec_helper'
 
-describe LibScosugBot::Storage::MongoDB::MongoStore do
+describe LibScosugBot::Storage::MongoStore do
 
   before(:each) do 
     @dbname = DBNAME
     @dbhost = DBHOST
     @dbport = DBPORT
 
-    @db = LibScosugBot::Storage::MongoDB::MongoStore.new(@dbname, @dbhost, @dbport)
+    @db = LibScosugBot::Storage::MongoStore.new(@dbname, @dbhost, @dbport)
 
     @test_vals = {
       'panda' => 'bamboo',
@@ -27,7 +27,7 @@ describe LibScosugBot::Storage::MongoDB::MongoStore do
   end
 
   it "should instantiate properly" do
-    @db.should be_instance_of(LibScosugBot::Storage::MongoDB::MongoStore)
+    @db.should be_instance_of(LibScosugBot::Storage::MongoStore)
   end
 
   describe "should handle storage effectively" do
@@ -65,7 +65,7 @@ describe LibScosugBot::Storage::MongoDB::MongoStore do
 
     it "and #fetch_raw should return whole objects" do
       @db.memorize('panda', 'bamboo')
-      @db.fetch_raw('panda').should be_instance_of(LibScosugBot::Storage::MongoDB::Definition)
+      @db.fetch_raw('panda').should be_instance_of(LibScosugBot::Storage::Definition)
       @db.fetch_raw('panda').contents.should eql('bamboo')
     end
   end

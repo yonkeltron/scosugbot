@@ -2,3 +2,4 @@
 
 require 'libscosugbot/pstorestorage'
 require 'libscosugbot/mongostorage'
+require 'libscosugbot/bot'

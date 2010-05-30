@@ -1,14 +1,14 @@
 require 'libscosugbot'
 require 'specs/spec_helper'
 
-describe LibScosugBot::Storage::MongoDB::MongoStore do
+describe LibScosugBot::Storage::MongoStore do
 
   before(:each) do 
     @dbname = DBNAME
     @dbhost = DBHOST
     @dbport = DBPORT
 
-    @db = LibScosugBot::Storage::MongoDB::MongoStore.new(@dbname, @dbhost, @dbport)
+    @db = LibScosugBot::Storage::MongoStore.new(@dbname, @dbhost, @dbport)
 
     @test_log_vals = {
       1 => ['panda', 'bamboo'],
@@ -28,7 +28,7 @@ describe LibScosugBot::Storage::MongoDB::MongoStore do
 
     it "and get last LogEntry object for #last_log_message" do
       @db.log(1, 'panda', 'bamboo')
-      @db.last_log_message.should be_instance_of(LibScosugBot::Storage::MongoDB::LogEntry)
+      @db.last_log_message.should be_instance_of(LibScosugBot::Storage::LogEntry)
       @db.last_log_message.priority.should eql(1)
       @db.last_log_message.message.should eql('panda')
       @db.last_log_message.service.should eql('bamboo')
