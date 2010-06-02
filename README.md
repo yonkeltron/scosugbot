@@ -34,21 +34,23 @@ Current features:
 In order to function, scosugbot has a few required
 dependencies:
 
+* [bundler](http://github.com/carlhuda/bundler)
 * Cinch framework
-* MongoDB (the database)
+* MongoDB (the database, install from package manager)
 * [Mongoid](http://mongoid.org/) (the gem)
 * JSON (the gem)
 * Rake
 * RSpec (for tests)
 * Fortune (install from package manager)
 
-Install MongoDB using your system's package manager or by
-following the [instructions on the MongoDB
-site](http://www.mongodb.org/display/DOCS/Quickstart). As for the rest,
-you can install the required gems with this command (assumes you have
-rubygems):
-
-`gem install cinch mongoid bson_ext json rake rspec`
+Install MongoDB using your system's package manager or by following
+the [instructions on the MongoDB
+site](http://www.mongodb.org/display/DOCS/Quickstart). As for the
+rest, you can use carlhuda's most excellent
+[bundler](http://github.com/carlhuda/bundler) tool to install the gems
+for you. No worries, just run a `bundle install` in the source
+directory and the appropriate data will be read from the Gemfile
+without issue.
 
 # Language
 Right now, scosug has some foul language in its vocabulary. Enjoy.
