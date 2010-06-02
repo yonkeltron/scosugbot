@@ -37,6 +37,11 @@ describe LibScosugBot::Storage::MongoStore do
       end
     end
 
+    it "and should set active to true on storage" do
+      @db.store('panda', 'bamboo')
+      LibScosugBot::Storage::Definition.first(:conditions => {:term => 'panda'}).active.should eql('true')
+    end
+
     it "and should recall successfully" do
       @test_vals.each_pair do |k,v|
         @db.store(k,v)
@@ -67,6 +72,26 @@ describe LibScosugBot::Storage::MongoStore do
       @db.memorize('panda', 'bamboo')
       @db.fetch_raw('panda').should be_instance_of(LibScosugBot::Storage::Definition)
       @db.fetch_raw('panda').contents.should eql('bamboo')
+    end
+
+    it "and #delete should actually do deletion" do
+      @db.memorize('panda', 'bamboo')
+      LibScosugBot::Storage::Definition.find(:conditions => { :term => 'panda'}).should_not be_nil
+      @db.delete('panda')
+      @db.fetch_raw('panda').should be_nil
+    end
+
+    it "and #forget should just deactivate records" do
+      @db.memorize('panda', 'bamboo')
+      @db.forget('panda')
+      LibScosugBot::Storage::Definition.first(:conditions => { :term => 'panda'}).active.should eql('false')
+
+    end
+
+    it "and #fetch_raw should not return deactivated definitions" do
+      @db.memorize('panda', 'bamboo')
+      @db.forget('panda')
+      @db.fetch_raw('panda').should be_nil      
     end
   end
 end

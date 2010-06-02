@@ -52,7 +52,7 @@ module LibScosugBot
           result.contents = val
           log(0, "Updating definition of #{key} with #{val}", 'memory')
         else
-          result = Definition.new(:term => key, :contents => val)
+          result = Definition.new(:term => key, :contents => val, :active => true)
         end
         result.save
       end
@@ -66,7 +66,23 @@ module LibScosugBot
       end
 
       def fetch_raw(key)
-        Definition.first(:conditions => {:term => key})
+        Definition.first(:conditions => {:term => key, :active => 'true'})
+      end
+
+      def delete(key)
+        result = Definition.first(:conditions => {:term => key})
+        if result
+          result = result.destroy
+        end
+        result
+      end
+
+      def forget(key)
+        result = Definition.first(:conditions => {:term => key, :active => 'true'})
+        if result
+          result = result.update_attributes(:active => false)
+        end
+        result
       end
 
       def log(priority, message, service = 'system')
@@ -80,6 +96,19 @@ module LibScosugBot
       def last_log_message
         LogEntry.last
       end
+
+      def activate_all(sure = nil)
+        if sure == true
+          Definition.all.each do |d|
+            d.update_attributes(:active => true)
+            log(2, 'Activating defition: #{d.inspect}', 'memory')
+            puts "Updated #{d.inspect}"
+          end
+        else
+          log(2, 'Asked to actival all definitions but was not sure. Not doing anything.', 'memory')
+          puts "Not sure so not activating all"
+        end
+      end
     end
 
     class Definition
@@ -88,6 +117,7 @@ module LibScosugBot
 
       field :term, :type => String
       field :contents, :type => String
+      field :active, :type => String
 
       #index :term, :background => true
     end
@@ -106,5 +136,3 @@ module LibScosugBot
     end
   end
 end
-
-

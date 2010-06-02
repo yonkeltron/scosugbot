@@ -38,7 +38,16 @@ module LibScosugBot
       end
 
       bot.plugin(",:thing", :prefix => false) do |m|
-        m.reply db.recall(m.args[:thing])
+        m.reply db.recall(m.args[:thing].downcase)
+      end
+
+      bot.plugin("forget :thing") do |m|
+        if db.forget(m.args[:thing].downcase)
+          rep = "Forgot #{m.args[:thing]}"
+        else
+          rep = "Could not forget #{m.args[:thing]}. Was it ever defined?" 
+        end
+        m.reply rep
       end
 
       bot.plugin "yfi :whatever" do |m|
@@ -81,6 +90,12 @@ module LibScosugBot
 
       bot.plugin "lastlog" do |m|
         m.reply db.last_log_message
+      end
+
+      bot.plugin "ghost", :prefix => :bot do |m|
+        m.reply "attempting to get my nick back"
+        m.reply "/nick scosugbot"
+        m.reply "attempt complete!"
       end
     end    
   end

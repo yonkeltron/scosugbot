@@ -1,6 +1,8 @@
 require 'rake'
+require 'rake/clean'
 require 'spec/rake/spectask'
 
+CLEAN.include("*~")
 
 desc "Run all specs"
 Spec::Rake::SpecTask.new('spec') do |t|
@@ -9,3 +11,4 @@ Spec::Rake::SpecTask.new('spec') do |t|
 end
 
 task :default => :spec
+
