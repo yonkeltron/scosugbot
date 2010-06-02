@@ -3,7 +3,8 @@
 puts "Engaging warp drive at #{Time.now.utc}"
 
 require 'rubygems'
-require 'cinch'
+require 'bundler'
+Bundler.setup
 require 'libscosugbot'
 
 print "Initializing database connection..."

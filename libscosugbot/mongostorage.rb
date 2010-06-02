@@ -1,7 +1,10 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
+require 'bundler'
+Bundler.setup
 require 'mongoid'
+
 
 module LibScosugBot
   module Storage
