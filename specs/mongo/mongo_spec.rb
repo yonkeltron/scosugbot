@@ -33,7 +33,7 @@ describe LibScosugBot::Storage::MongoStore do
   describe "should handle storage effectively" do
     it "and should store successfully" do
       @test_vals.each_pair do |k,v|
-        @db.store(@k, @v).should be_true
+        ret = @db.store(k,v).should be_true
       end
     end
 

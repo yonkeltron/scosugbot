@@ -36,7 +36,13 @@ describe LibScosugBot::Storage::MongoStore do
 
     describe "and produce pretty output upon string conversion" do
       before(:each) do
-      @db.log(1, 'panda', 'bamboo')
+        @dbname = DBNAME
+        @dbhost = DBHOST
+        @dbport = DBPORT
+        
+        @db = LibScosugBot::Storage::MongoStore.new(@dbname, @dbhost, @dbport)
+        
+        @db.log(1, 'panda', 'bamboo')
       end
 
       it "and format messages properly" do
@@ -58,6 +64,17 @@ describe LibScosugBot::Storage::MongoStore do
       it "and have a text arrow for timestamp pointer" do
         @db.last_log_message.to_s.should match(/<-/)
       end
+    end
+  end
+
+  describe "should validate properly" do
+    describe "and validate presence" do
+      generate_presence_specs(:log_entry, [:message, :priority, :service]).call
+    end
+
+    it "and fail on non-numerical priority" do
+      le = Factory.build :log_entry, :priority => []
+      le.should_not be_valid
     end
   end
 end

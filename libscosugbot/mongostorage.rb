@@ -122,6 +122,9 @@ module LibScosugBot
       field :contents, :type => String
       field :active, :type => String
 
+      validates_presence_of :term, :contents, :active
+      validates_uniqueness_of :term
+
       #index :term, :background => true
     end
 
@@ -132,6 +135,9 @@ module LibScosugBot
       field :message, :type => String
       field :priority, :type => Integer
       field :service, :type => String
+
+      validates_presence_of :message, :priority, :service
+      validates_numericality_of :priority
 
       def to_s
         "Message: #{self.message} | Priority: #{self.priority} | Service: #{self.service} <- Logged at #{self.created_at}"
