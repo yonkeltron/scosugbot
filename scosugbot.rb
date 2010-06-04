@@ -6,13 +6,18 @@ require 'rubygems'
 require 'bundler'
 Bundler.setup
 require 'libscosugbot'
+require 'yaml'
+
+print "Loading configuration data..."
+config = YAML.load_file('config.yml')
+puts "Done."
 
 print "Initializing database connection..."
-db = LibScosugBot::Storage::MongoStore.new('scosugbot')
+db = LibScosugBot::Storage::MongoStore.new(config['mongodb']['db'])
 puts "Done. Connected -> #{db}"
 
 print "Defining plugins..."
-bot = LibScosugBot::Bot.setup("irc.freenode.net", "scosugbot", %w{ #scosug }, db)
+bot = LibScosugBot::Bot.setup(config['server'], config['nick'], config['channels'], db)
 puts "Done."
 
 puts "Starting up!"
