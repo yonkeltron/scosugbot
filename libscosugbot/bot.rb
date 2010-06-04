@@ -20,7 +20,7 @@ module LibScosugBot
 
     def self.plugins(bot, db)
       bot.plugin("hello", :prefix => :bot) do |m|
-        m.reply "#{m.nick}: man, fuck you. leave my silicon ass alone!"
+        m.answer "man, fuck you. leave my silicon ass alone!"
       end
 
       bot.plugin "say :text" do |m|
@@ -62,16 +62,16 @@ module LibScosugBot
       bot.add_custom_pattern(:swear, /fuck|shit/)
 
       bot.plugin(":curse-swear", :prefix => false) do |m|
-        m.reply "#{m.nick}: watch your fucking mouth for saying #{m.args[:curse]}..."
+        m.answer "watch your fucking mouth for saying #{m.args[:curse]}..."
       end
 
       bot.plugin("robe", :prefix => false) do |m|
         m.reply "#{m.nick}: I put on my robe and wizard hat."
       end
 
-      bot.plugin("ping", :prefix => :bot) do |m|
+      bot.plugin("ping") do |m|
         db.log(0, "ping from #{m.nick}", 'ping')
-        m.reply "#{m.nick}: pong -> [#{Time.now.utc}]"
+        m.answer "pong -> [#{Time.now.utc}]"
       end
 
       bot.plugin "fortune" do |m|
@@ -79,25 +79,30 @@ module LibScosugBot
       end
 
       bot.plugin("language") do |m|
-        m.reply "#{m.nick}: I am written in Ruby using Cinch. Check it out on github -> http://github.com/injekt/cinch"
+        m.answer "I am written in Ruby using Cinch. Check it out on github -> http://github.com/injekt/cinch"
       end
 
       bot.plugin("you suck", :prefix => :bot) do |m|
-        m.reply "#{m.nick}: I will go to the animal shelter and find the saddest, cutest kitten there. I will buy you this kitten. You will fall in love with this kitten. And then, in the middle of the night, I will sneak into your house and I will punch you in the face."
+        m.answer "I will go to the animal shelter and find the saddest, cutest kitten there. I will buy you this kitten. You will fall in love with this kitten. And then, in the middle of the night, I will sneak into your house and I will punch you in the face."
       end
 
       bot.plugin("pull my finger", :prefix => :bot) do |m|
-        m.reply "#{m.nick}: get away from me. you. sick. fuck."
+        m.answer "get away from me. you. sick. fuck."
       end
 
       bot.plugin "lastlog" do |m|
         m.reply db.last_log_message
       end
 
-      bot.plugin "ghost", :prefix => :bot do |m|
-        m.reply "attempting to get my nick back"
-        m.reply "/nick scosugbot"
-        m.reply "attempt complete!"
+      started = Time.now
+      bot.plugin 'stats' do |m|
+        m.reply "Up since #{started}"
+        m.reply "#{db.definition_count} total definitions"
+        m.reply "#{db.log_count} total log entries"
+      end
+      
+      bot.plugin 'joke', :prefix => nil do |m|
+        m.reply 'Ba-DUM Tish!'
       end
     end    
   end

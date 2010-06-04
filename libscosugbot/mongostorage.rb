@@ -112,6 +112,14 @@ module LibScosugBot
           puts "Not sure so not activating all"
         end
       end
+
+      def definition_count
+        Definition.count
+      end
+
+      def log_count
+        LogEntry.count
+      end
     end
 
     class Definition
@@ -120,12 +128,12 @@ module LibScosugBot
 
       field :term, :type => String
       field :contents, :type => String
-      field :active, :type => String
+      field :active, :type => String, :default => true
 
       validates_presence_of :term, :contents, :active
       validates_uniqueness_of :term
 
-      #index :term, :background => true
+      # index :term, :unique => true, :background => true
     end
 
     class LogEntry
