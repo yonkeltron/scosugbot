@@ -40,4 +40,21 @@ describe LibScosugBot::Views::MemorizationSnippets do
     end
   end
 
+  describe "#recall_snippet" do
+    it "and should respond to #recall_snippet" do
+      LibScosugBot::Views::MemorizationSnippets.should respond_to(:recall_snippet)
+    end
+
+    it "and should respond properly on success" do
+      LibScosugBot::Views::MemorizationSnippets.recall_snippet(@thing, @val).should eql("#{@thing} is #{@val}")
+    end
+
+    it "and should respond properly on failure" do
+      LibScosugBot::Views::MemorizationSnippets.recall_snippet(@thing, nil).should eql("I don't know what #{@thing} is")
+    end
+
+    it "and should respond properly on exception" do
+     LibScosugBot::Views::MemorizationSnippets.recall_snippet(@thing, Exception.new).should eql("Error retrieving #{@thing}: #{Exception.new}")
+    end
+  end
 end

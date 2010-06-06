@@ -22,6 +22,17 @@ module LibScosugBot
         end
         rep
       end
+
+      def self.recall_snippet(thing, success)
+        if success.kind_of?(Exception)
+          rep = "Error retrieving #{thing}: #{success}"
+        elsif success
+          rep = "#{thing} is #{success}"
+        else
+          rep = "I don't know what #{thing} is"
+        end
+        rep
+      end
     end
   end
 end
