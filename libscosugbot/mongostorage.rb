@@ -21,29 +21,19 @@ module LibScosugBot
       
       def memorize(key,val)
         begin
-          success = store(key, val)
-          if success
-            result = "Got it."
-          else
-            result = "FAIL while storing #{key}!"
-          end
-        rescue Exceptopn => e
+          result = store(key, val)
+        rescue Exception => e
           log(4, "#{result} -> #{e}", 'memory')
-          result = "Problem storing #{key}: #{e}"
+          result = e
         end
         result
       end
 
       def recall(key)
         begin
-          success = fetch(key)
-          if success
-            result = "#{key} is #{success}"
-          else
-            result = "I don't know what #{key} is"
-          end
+          result = fetch(key)
         rescue Exception => e
-          result = "Error retrieving #{key}: #{e}"
+          result = e
           log(4, result, 'memory')
         end
         result
@@ -52,7 +42,7 @@ module LibScosugBot
       def store(key,val)
         result = fetch_raw(key)
         if result
-          result.contents = val
+          result.update_attributes!(:contents => val)
           log(0, "Updating definition of #{key} with #{val}", 'memory')
         else
           result = Definition.new(:term => key, :contents => val, :active => true)

@@ -54,12 +54,12 @@ describe LibScosugBot::Storage::MongoStore do
     end
 
     it "and should respond properly to memorize" do
-      @db.memorize('panda', 'bamboo').should eql("Got it.")
+      @db.memorize('panda', 'bamboo').should be_true
     end
 
     it "and should respond properly to recall" do
       @db.memorize('panda', 'bamboo')
-      @db.recall('panda').should match(/panda is bamboo/)
+      @db.recall('panda').should be_true
     end
 
     it "and should deal with replacements properly" do

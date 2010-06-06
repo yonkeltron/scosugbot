@@ -7,7 +7,8 @@ require 'cinch'
 
 module LibScosugBot
   module Bot
-    
+    include LibScosugBot::Views
+
     def self.setup(irc_host, irc_nick, irc_channels, storage_system)
       irc_bot = Cinch.setup do
         server irc_host
@@ -28,19 +29,21 @@ module LibScosugBot
       end
 
       bot.plugin "memorize :thing is :def" do |m|
-        m.reply db.memorize(m.args[:thing].downcase, m.args[:def])
+        m.reply MemorizationSnippets.memorize_snippet(m.args[:thing], 
+                                                      db.memorize(m.args[:thing].downcase, m.args[:def]))
       end
-
+      
       bot.plugin "recall :thing" do |m|
-        m.reply db.recall(m.args[:thing].downcase)
+        m.reply MemorizationSnippets.recall_snippet(m.args[:thing], db.recall(m.args[:thing].downcase))
       end
-
+      
       bot.plugin("tell :who-word about :what") do |m|
-        m.reply "#{m.args[:who]}: #{db.recall(m.args[:what])}"
+        definition = MemorizationSnippets.recall_snippet(m.args[:what], db.recall(m.args[:what]))
+        m.reply "#{m.args[:who]}: #{definition}"
       end
 
       bot.plugin(",:thing", :prefix => false) do |m|
-        m.reply db.recall(m.args[:thing].downcase)
+        m.reply MemorizationSnippets.recall_snippet(m.args[:thing], db.recall(m.args[:thing].downcase))
       end
 
       bot.plugin("forget :thing") do |m|
