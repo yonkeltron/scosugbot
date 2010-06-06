@@ -108,7 +108,7 @@ module LibScosugBot
             puts "Updated #{d.inspect}"
           end
         else
-          log(2, 'Asked to actival all definitions but was not sure. Not doing anything.', 'memory')
+          log(2, 'Asked to activate all definitions but was not sure. Not doing anything.', 'memory')
           puts "Not sure so not activating all"
         end
       end

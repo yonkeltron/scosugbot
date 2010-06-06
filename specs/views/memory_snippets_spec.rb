@@ -36,7 +36,7 @@ describe LibScosugBot::Views::MemorizationSnippets do
     end
     
     it "and should respond properly on exception" do
-      LibScosugBot::Views::MemorizationSnippets.memorize_snippet(@thing, false, @val).should eql("Problem storing #{@thing}: #{@val}")
+      LibScosugBot::Views::MemorizationSnippets.memorize_snippet(@thing, Exception.new).should eql("Problem storing #{@thing}: #{Exception.new}")
     end
   end
 

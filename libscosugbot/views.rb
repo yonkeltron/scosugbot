@@ -12,9 +12,9 @@ module LibScosugBot
         rep
       end
 
-      def self.memorize_snippet(thing, success, exception = nil)
-        if exception
-          rep = "Problem storing #{thing}: #{exception}"
+      def self.memorize_snippet(thing, success)
+        if success.kind_of?(Exception)
+          rep = "Problem storing #{thing}: #{success}"
         elsif success
           rep = "Got it."
         else
