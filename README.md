@@ -27,7 +27,7 @@ Current features:
 `!ping` #=> "pong -> [timestamp]"
 
 ## Fortune
-`!fortune` #=> <whatever>
+`!fortune` #=> "WHA!"
 
 # Requirements
 
@@ -40,8 +40,12 @@ dependencies:
 * [Mongoid](http://mongoid.org/) (the gem)
 * JSON (the gem)
 * Rake
-* RSpec (for tests)
 * Fortune (install from package manager)
+
+For testing:
+
+* RSpec
+* Factory Girl](http://github.com/thoughtbot/factory_girl)
 
 Install MongoDB using your system's package manager or by following
 the [instructions on the MongoDB
@@ -52,8 +56,20 @@ for you. No worries, just run a `bundle install` in the source
 directory and the appropriate data will be read from the Gemfile
 without issue.
 
+# Run the tests
+
+Once you have installed the requirements, you can run the tests with
+little more than a `bundle exec rake`. Make sure MongoDB is running as
+the test suite also serves as a way to veryify connectivity and
+environmental configuration.
+
+The tests are not so speedy because they actually have to do some
+database hitting but I hope to make them faster in the
+future. Improvements welcome.
+
 # Language
 Right now, scosug has some foul language in its vocabulary. Enjoy.
 
 # ToDos
+* Migrate to snippets system to provide better separation of concerns
 * Weather plugin
