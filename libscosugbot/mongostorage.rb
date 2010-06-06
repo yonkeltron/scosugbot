@@ -40,14 +40,14 @@ module LibScosugBot
       end
 
       def store(key,val)
-        result = fetch_raw(key)
+        result = fetch_raw(key, false)
         if result
-          result.update_attributes!(:contents => val)
+          result = result.update_attributes!(:contents => val, :active => true)
           log(0, "Updating definition of #{key} with #{val}", 'memory')
         else
-          result = Definition.new(:term => key, :contents => val, :active => true)
+          result = Definition.create!(:term => key, :contents => val, :active => true)
         end
-        result.save
+        result
       end
 
       def fetch(key)
@@ -58,8 +58,12 @@ module LibScosugBot
         result
       end
 
-      def fetch_raw(key)
-        Definition.first(:conditions => {:term => key, :active => 'true'})
+      def fetch_raw(key, only_active = true)
+        conds = {:term => key}
+        if only_active
+          conds[:active] = 'true'
+        end
+        Definition.first(:conditions => conds)
       end
 
       def delete(key)
@@ -71,7 +75,7 @@ module LibScosugBot
       end
 
       def forget(key)
-        result = Definition.first(:conditions => {:term => key, :active => 'true'})
+        result = fetch_raw(key) #Definition.first(:conditions => {:term => key, :active => 'true'})
         if result
           result = result.update_attributes(:active => false)
         end

@@ -85,13 +85,26 @@ describe LibScosugBot::Storage::MongoStore do
       @db.memorize('panda', 'bamboo')
       @db.forget('panda')
       LibScosugBot::Storage::Definition.first(:conditions => { :term => 'panda'}).active.should eql('false')
-
     end
 
-    it "and #fetch_raw should not return deactivated definitions" do
+    it "and #fetch_raw should not return deactivated definitions by default" do
       @db.memorize('panda', 'bamboo')
       @db.forget('panda')
       @db.fetch_raw('panda').should be_nil      
+    end
+
+    it "and #fetch_raw should return deactivated definitions when asked" do
+      @db.memorize('panda', 'bamboo')
+      @db.forget('panda')
+      @db.fetch_raw('panda', false).contents.should eql('bamboo')
+    end
+
+    it "and new memorizations should do updates properly, even when deactivated" do
+      @db.memorize('panda', 'bamboo')
+      @db.forget('panda')
+      @db.fetch_raw('panda').should be_nil
+      @db.memorize('panda', 'curry')
+      @db.fetch_raw('panda').contents.should eql('curry')
     end
   end
 end
