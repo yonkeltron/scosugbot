@@ -19,5 +19,11 @@ describe LibScosugBot::Utils::Twitter do
         LibScosugBot::Utils::Twitter.twitter_url(k,v).should match(Regexp.new("count=#{v}"))
       end
     end
+
+    it "should format usernames correctly" do
+      @vals.each_pair do |k,v|
+        LibScosugBot::Utils::Twitter.twitter_url(k,v).should match(Regexp.new("/#{k}.json?"))
+      end
+    end
   end
 end
