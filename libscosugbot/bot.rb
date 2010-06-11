@@ -104,7 +104,7 @@ module LibScosugBot
         m.reply "#{db.log_count} total log entries"
       end
       
-      bot.plugin 'joke', :prefix => nil do |m|
+      bot.plugin 'joke' do |m|
         m.reply 'Ba-DUM Tish!'
       end
     end    
