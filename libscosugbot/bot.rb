@@ -107,6 +107,15 @@ module LibScosugBot
       bot.plugin 'joke' do |m|
         m.reply 'Ba-DUM Tish!'
       end
+
+      bot.plugin 'twitter :nick' do |m|
+        nick = m.args[:nick]
+        m.reply "Fetching last tweet for #{nick}..."
+        db.log(2, "Fetching tweets for #{nick}", 'twitter')
+        LibScosugBot::Utils::Twitter.get_last_twitter_statuses(nick).each do |tweet|
+          m.reply "#{nick} tweeted \"#{tweet['text']}\" at #{tweet['created_at']}"
+        end
+      end
     end    
   end
 end

@@ -6,7 +6,7 @@ require 'net/http'
 module LibScosugBot
   module Utils
     class Twitter
-      def self.get_last_twitter_statuses_as_hash(username, count = 1)
+      def self.get_last_twitter_statuses(username, count = 1)
         JSON.parse(self.get_raw_json_string(username, count))
       end
 
