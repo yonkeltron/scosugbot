@@ -122,7 +122,7 @@ module LibScosugBot
 
       field :term, :type => String
       field :contents, :type => String
-      field :active, :type => String, :default => true
+      field :active, :type => String, :default => true.to_s
 
       validates_presence_of :term, :contents, :active
       validates_uniqueness_of :term
