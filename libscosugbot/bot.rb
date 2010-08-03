@@ -72,13 +72,17 @@ module LibScosugBot
         m.reply "#{m.nick}: I put on my robe and wizard hat."
       end
 
+      bot.plugin("ls", :prefix => false) do |m|
+        m.answer("This isn't your shell, buddy. Take it somewhere else!")
+      end
+
       bot.plugin("ping") do |m|
         db.log(0, "ping from #{m.nick}", 'ping')
         m.answer "pong -> [#{Time.now.utc}]"
       end
 
       bot.plugin "fortune" do |m|
-        m.reply "#{`fortune`}".gsub(/\n/, ' ').gsub(/\t/, ' ')
+        m.reply "#{`fortune -s`}".gsub(/\n/, ' ').gsub(/\t/, ' ')
       end
 
       bot.plugin("language") do |m|
