@@ -1,4 +1,5 @@
-require 'specs/spec_helper'
+#!/usr/bin/env ruby
+require 'spec/spec_helper'
 
 describe LibScosugBot::Utils::Twitter do
 

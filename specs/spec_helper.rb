@@ -3,6 +3,7 @@ require 'bundler'
 Bundler.setup
 require 'libscosugbot'
 require 'factory_girl'
+
 Factory.find_definitions
 Dir.glob(File.dirname(__FILE__) + "/factories/*.rb").each do |factory|
   require factory

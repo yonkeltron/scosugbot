@@ -72,9 +72,9 @@ module LibScosugBot
         m.reply "#{m.nick}: I put on my robe and wizard hat."
       end
 
-      bot.plugin("ls", :prefix => false) do |m|
-        m.answer("This isn't your shell, buddy. Take it somewhere else!")
-      end
+      # bot.plugin("ls", :prefix => false) do |m|
+      #   m.answer("This isn't your shell, buddy. Take it somewhere else!")
+      # end
 
       bot.plugin("ping") do |m|
         db.log(0, "ping from #{m.nick}", 'ping')
