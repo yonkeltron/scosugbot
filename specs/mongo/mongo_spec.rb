@@ -1,5 +1,4 @@
-require 'libscosugbot'
-require 'specs/spec_helper'
+require_relative '../spec_helper'
 
 describe LibScosugBot::Storage::MongoStore do
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require 'specs/spec_helper'
+require_relative '../spec_helper'
 
 describe LibScosugBot::Views::MemorizationSnippets do
 

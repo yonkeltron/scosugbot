@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bundler'
 Bundler.setup
-require 'libscosugbot'
+require_relative '../libscosugbot'
 require 'factory_girl'
 
 Factory.find_definitions

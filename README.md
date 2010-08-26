@@ -1,6 +1,6 @@
 THIS IS BROKEN RIGHT NOW. Moved to Ruby 1.9.2 to support new cinch and
-now specs won't run because of goofy require errors. No patience to
-fix this at the moment so everyone just cool it. KTHXBYE
+now in the middle of a port to the new libs. I am pumped. Get pumped
+with me.
 
 # SCOSUGBOT
 

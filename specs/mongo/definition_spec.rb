@@ -1,8 +1,4 @@
-require 'rubygems'
-require 'bundler'
-Bundler.setup
-require 'libscosugbot'
-require 'specs/spec_helper'
+require_relative '../spec_helper'
 
 
 describe LibScosugBot::Storage::Definition do
