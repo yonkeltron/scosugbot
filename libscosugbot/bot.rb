@@ -9,13 +9,17 @@ module LibScosugBot
   module Bot
     include LibScosugBot::Views
 
-    def self.setup(irc_host, irc_nick, irc_channels, storage_system)
-      irc_bot = Cinch.setup do
-        server irc_host
-        nick irc_nick
-        channels irc_channels
+    def self.setup(irc_host, irc_nick, irc_channels, db)
+      irc_bot = Cinch::Bot.new do
+        configure do |c|
+          c.server = irc_host
+          c.nick = irc_nick
+          c.channels = irc_channels
+        end
+
+        
+        
       end
-      self.plugins(irc_bot, storage_system)
       irc_bot
     end
 
