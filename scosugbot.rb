@@ -13,11 +13,11 @@ config = YAML.load_file('config.yml')
 puts "Done."
 
 print "Initializing database connection..."
-db = LibScosugBot::Storage::MongoStore.new(config['mongodb']['db'])
-puts "Done. Connected -> #{db}"
+DATABASE = LibScosugBot::Storage::MongoStore.new(config['mongodb']['db'])
+puts "Done. Connected -> #{DATABASE}"
 
 print "Defining plugins..."
-bot = LibScosugBot::Bot.setup(config['server'], config['nick'], [config['channels']], db)
+bot = LibScosugBot::Bot.setup(config['server'], config['nick'], [config['channels']], DATABASE)
 puts "Done."
 
 puts "Starting up!"

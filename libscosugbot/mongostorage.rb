@@ -10,9 +10,14 @@ module LibScosugBot
   module Storage
     class MongoStore
       attr_accessor :db
+
+      def MongoStore(dbname, host = 'localhost', port = '27017')
+        @@db = new(dbname, host = 'localhost', port = '27017')
+      end
       
       def initialize(dbname, host = 'localhost', port = '27017')
         @db = Mongo::Connection.new(host, port).db(dbname)
+        @@db = @db
         Mongoid.configure do |config|
           config.master = @db
         end
