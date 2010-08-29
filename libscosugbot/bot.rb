@@ -51,11 +51,11 @@ module LibScosugBot
         on :message, /^!fortune$/ do |m|
           m.reply "#{`fortune -s`}".gsub(/\n/, ' ').gsub(/\t/, ' ')
         end
-        
+
         on :message, /^!language$/  do |m|
           m.reply "I am written in Ruby using Cinch. Check it out on github -> http://github.com/injekt/cinch", m.user.nick
         end
-        
+
         on :message, "you suck" do |m|
           m.reply "I will go to the animal shelter and find the saddest, cutest kitten there. I will buy you this kitten. You will fall in love with this kitten. And then, in the middle of the night, I will sneak into your house and I will punch you in the face.", m.user.nick
         end
@@ -74,7 +74,7 @@ module LibScosugBot
           m.reply "#{db.definition_count} total definitions"
           m.reply "#{db.log_count} total log entries"
         end
-      
+
         on :message, /^!joke$/ do |m|
           m.reply 'Ba-DUM Tish!'
         end

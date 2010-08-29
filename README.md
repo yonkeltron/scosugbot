@@ -1,13 +1,9 @@
-THIS IS BROKEN RIGHT NOW. Moved to Ruby 1.9.2 to support new cinch and
-now in the middle of a port to the new libs. I am pumped. Get pumped
-with me.
-
 # SCOSUGBOT
 
 The official IRC bot of the Southern Connecticut Open Source User
-Group! 
+Group!
 
-# About 
+# About
 
 It's written in Ruby using the [Cinch](http://github.com/injekt/cinch)
 framework while relying on the super-cool MongoDB as a backend. You
@@ -38,6 +34,7 @@ Current features:
 In order to function, scosugbot has a few required
 dependencies:
 
+* Ruby 1.9.2
 * [bundler](http://github.com/carlhuda/bundler)
 * Cinch framework
 * MongoDB (the database, install from package manager)
@@ -75,5 +72,5 @@ future. Improvements welcome.
 Right now, scosug has some foul language in its vocabulary. Enjoy.
 
 # ToDos
-* Migrate to snippets system to provide better separation of concerns
 * Weather plugin
+* Port to CouchDB
