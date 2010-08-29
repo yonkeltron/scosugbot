@@ -17,21 +17,19 @@ module LibScosugBot
           c.channels = irc_channels
         end
 
-        
+        on :message, /hello/ do |m|
+          m.answer "Greetings, Program!"
+        end
+
+        on :message, /say (.+)/ do |m, text|
+          m.reply text
+        end
         
       end
       irc_bot
     end
 
     def self.plugins(bot, db)
-      bot.plugin("hello", :prefix => :bot) do |m|
-        m.answer "man, fuck you. leave my silicon ass alone!"
-      end
-
-      bot.plugin "say :text" do |m|
-        m.reply m.args[:text]
-      end
-
       bot.plugin "memorize :thing is :def" do |m|
         m.reply MemorizationSnippets.memorize_snippet(m.args[:thing], 
                                                       db.memorize(m.args[:thing].downcase, m.args[:def]))
