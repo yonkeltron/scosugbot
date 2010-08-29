@@ -7,15 +7,13 @@ require 'cinch'
 
 module LibScosugBot
   module Bot
-    include LibScosugBot::Views
-
     def self.setup(irc_host, irc_nick, irc_channels, db)
       irc_bot = Cinch::Bot.new do
         configure do |c|
           c.server = irc_host
           c.nick = irc_nick
           c.channels = irc_channels
-          c.plugins.plugins = [LibScosugBot::TwitterPlugin]
+          c.plugins.plugins = [::LibScosugBot::TwitterPlugin, ::LibScosugBot::MemorizationPlugin]
         end
 
         on :message, 'hello' do |m|
@@ -81,35 +79,5 @@ module LibScosugBot
       # return bot object
       irc_bot
     end
-
-    def self.plugins(bot, db)
-      bot.plugin "memorize :thing is :def" do |m|
-        m.reply MemorizationSnippets.memorize_snippet(m.args[:thing], 
-                                                      db.memorize(m.args[:thing].downcase, m.args[:def]))
-      end
-      
-      bot.plugin "recall :thing" do |m|
-        m.reply MemorizationSnippets.recall_snippet(m.args[:thing], db.recall(m.args[:thing].downcase))
-      end
-      
-      bot.plugin("tell :who-word about :what") do |m|
-        definition = MemorizationSnippets.recall_snippet(m.args[:what], db.recall(m.args[:what]))
-        m.reply "#{m.args[:who]}: #{definition}"
-      end
-
-      bot.plugin(",:thing", :prefix => false) do |m|
-        m.reply MemorizationSnippets.recall_snippet(m.args[:thing], db.recall(m.args[:thing].downcase))
-      end
-
-      bot.plugin("forget :thing") do |m|
-        if db.forget(m.args[:thing].downcase)
-          rep = "Forgot #{m.args[:thing]}"
-        else
-          rep = "Could not forget #{m.args[:thing]}. Was it ever defined?" 
-        end
-        m.reply rep
-      end
-
-    end    
   end
 end

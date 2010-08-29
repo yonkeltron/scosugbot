@@ -5,6 +5,7 @@ puts "Engaging warp drive at #{Time.now.utc}"
 require 'rubygems'
 require 'bundler'
 Bundler.setup
+require 'cinch'
 require_relative './libscosugbot'
 require 'yaml'
 

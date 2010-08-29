@@ -1,6 +1,6 @@
 module LibScosugBot
   class TwitterPlugin
-    include Cinch::Plugin
+    include ::Cinch::Plugin
 
     match /twitter (\S+)$/
     prefix '!'
