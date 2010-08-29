@@ -17,15 +17,67 @@ module LibScosugBot
           c.channels = irc_channels
         end
 
-        on :message, /hello/ do |m|
-          m.answer "Greetings, Program!"
+        on :message, 'hello' do |m|
+          m.reply "Greetings, Program!", m.user.nick
         end
 
         on :message, /say (.+)/ do |m, text|
           m.reply text
         end
+
+        on :message, /robe/ do |m|
+          m.reply "#{m.user.nick}: I put on my robe and wizard hat."
+        end
+
+        on :message, /yfi (.+)/ do |m, whatever|
+          abbrevs = :whatever.split.collect do |w|
+            w[0].chr
+          end
+          m.reply "yfi#{abbrevs.join}!"
+        end
+
+        on :message, 'ls' do |m|
+          m.reply "This isn't your shell, buddy. Take it somewhere else!", m.user.nick
+        end
+
+        on :message, "ping" do |m|
+          db.log(0, "ping from #{m.nick}", 'ping')
+          m.reply "pong -> [#{Time.now.utc}]", m.user.nick
+        end
+
+        on :message, "fortune" do |m|
+          m.reply "#{`fortune -s`}".gsub(/\n/, ' ').gsub(/\t/, ' ')
+        end
         
+        on :message, "language"  do |m|
+          m.reply "I am written in Ruby using Cinch. Check it out on github -> http://github.com/injekt/cinch", m.user.nick
+        end
+        
+        on :message, "you suck", :prefix => :bot do |m|
+          m.reply "I will go to the animal shelter and find the saddest, cutest kitten there. I will buy you this kitten. You will fall in love with this kitten. And then, in the middle of the night, I will sneak into your house and I will punch you in the face.", m.user.nick
+        end
+
+        on :message, "pull my finger", :use_prefix => :bot do |m|
+          m.reply "get away from me. you. sick. fuck.", m.user.nick
+        end
+
+        on :message, /^!lastlog$/, :use_prefix => true do |m|
+          m.reply db.last_log_message
+        end
+
+        started = Time.now
+        on :message, /^!stats$/, :use_prefix => true do |m|
+          m.reply "Up since #{started}"
+          m.reply "#{db.definition_count} total definitions"
+          m.reply "#{db.log_count} total log entries"
+        end
+      
+        on :message, 'joke', :use_prefix => true do |m|
+          m.reply 'Ba-DUM Tish!'
+        end
+
       end
+      # return bot object
       irc_bot
     end
 
@@ -55,63 +107,6 @@ module LibScosugBot
           rep = "Could not forget #{m.args[:thing]}. Was it ever defined?" 
         end
         m.reply rep
-      end
-
-      bot.plugin "yfi :whatever" do |m|
-        abbrevs = m.args[:whatever].split.collect do |w|
-          w[0].chr
-        end
-        m.reply "yfi#{abbrevs.join}!"
-      end
-
-      bot.add_custom_pattern(:swear, /fuck|shit/)
-
-      bot.plugin(":curse-swear", :prefix => false) do |m|
-        m.answer "watch your fucking mouth for saying #{m.args[:curse]}..."
-      end
-
-      bot.plugin("robe", :prefix => false) do |m|
-        m.reply "#{m.nick}: I put on my robe and wizard hat."
-      end
-
-      # bot.plugin("ls", :prefix => false) do |m|
-      #   m.answer("This isn't your shell, buddy. Take it somewhere else!")
-      # end
-
-      bot.plugin("ping") do |m|
-        db.log(0, "ping from #{m.nick}", 'ping')
-        m.answer "pong -> [#{Time.now.utc}]"
-      end
-
-      bot.plugin "fortune" do |m|
-        m.reply "#{`fortune -s`}".gsub(/\n/, ' ').gsub(/\t/, ' ')
-      end
-
-      bot.plugin("language") do |m|
-        m.answer "I am written in Ruby using Cinch. Check it out on github -> http://github.com/injekt/cinch"
-      end
-
-      bot.plugin("you suck", :prefix => :bot) do |m|
-        m.answer "I will go to the animal shelter and find the saddest, cutest kitten there. I will buy you this kitten. You will fall in love with this kitten. And then, in the middle of the night, I will sneak into your house and I will punch you in the face."
-      end
-
-      bot.plugin("pull my finger", :prefix => :bot) do |m|
-        m.answer "get away from me. you. sick. fuck."
-      end
-
-      bot.plugin "lastlog" do |m|
-        m.reply db.last_log_message
-      end
-
-      started = Time.now
-      bot.plugin 'stats' do |m|
-        m.reply "Up since #{started}"
-        m.reply "#{db.definition_count} total definitions"
-        m.reply "#{db.log_count} total log entries"
-      end
-      
-      bot.plugin 'joke' do |m|
-        m.reply 'Ba-DUM Tish!'
       end
 
       bot.plugin 'twitter :nick' do |m|

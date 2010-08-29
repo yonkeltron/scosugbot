@@ -5,7 +5,7 @@ puts "Engaging warp drive at #{Time.now.utc}"
 require 'rubygems'
 require 'bundler'
 Bundler.setup
-require 'libscosugbot'
+require_relative './libscosugbot'
 require 'yaml'
 
 print "Loading configuration data..."
@@ -17,8 +17,8 @@ db = LibScosugBot::Storage::MongoStore.new(config['mongodb']['db'])
 puts "Done. Connected -> #{db}"
 
 print "Defining plugins..."
-bot = LibScosugBot::Bot.setup(config['server'], config['nick'], config['channels'], db)
+bot = LibScosugBot::Bot.setup(config['server'], config['nick'], [config['channels']], db)
 puts "Done."
 
 puts "Starting up!"
-bot.run
+bot.start
