@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require_relative './libscosugbot/generic_storage'
 require_relative './libscosugbot/pstorestorage'
 require_relative './libscosugbot/mongostorage'
 require_relative './libscosugbot/views'

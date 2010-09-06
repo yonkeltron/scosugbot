@@ -8,7 +8,7 @@ require 'mongoid'
 
 module LibScosugBot
   module Storage
-    class MongoStore
+    class MongoStore < GenericStore
       attr_accessor :db
 
       def initialize(dbname, host = 'localhost', port = '27017')
@@ -19,26 +19,6 @@ module LibScosugBot
         log(0, "Starting Up at #{Time.now}")
       end
       
-      def memorize(key,val)
-        begin
-          result = store(key, val)
-        rescue Exception => e
-          log(4, "#{result} -> #{e}", 'memory')
-          result = e
-        end
-        result
-      end
-
-      def recall(key)
-        begin
-          result = fetch(key)
-        rescue Exception => e
-          result = e
-          log(4, result, 'memory')
-        end
-        result
-      end
-
       def store(key,val)
         result = fetch_raw(key, false)
         if result
@@ -46,14 +26,6 @@ module LibScosugBot
           log(0, "Updating definition of #{key} with #{val}", 'memory')
         else
           result = Definition.create!(:term => key, :contents => val, :active => true)
-        end
-        result
-      end
-
-      def fetch(key)
-        result = fetch_raw(key)
-        if result
-          result = result.contents
         end
         result
       end
