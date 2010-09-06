@@ -1,3 +1,5 @@
+require 'cinch'
+
 module LibScosugBot
   class TwitterPlugin
     include ::Cinch::Plugin

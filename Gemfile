@@ -3,7 +3,7 @@ source :gemcutter
 #
 # gem "rails"
 
-gem "cinch", "1.0.1"
+gem "cinch", "1.0.2"
 gem "mongoid", "2.0.0.beta.15"
 gem "bson_ext"
 gem "json"
